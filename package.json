@@ -1,0 +1,23 @@
+{
+  "name": "porida",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "bun@1.4.2",
+  "engines": {
+    "node": "24.x"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:web": "bun --filter ./apps/web dev",
+    "dev:api": "bun --filter ./apps/api start:dev",
+    "build:web": "bun --filter ./apps/web build",
+    "build:api": "bun --filter ./apps/api build",
+    "lint:web": "bun --filter ./apps/web lint",
+    "lint:api": "bun --filter ./apps/api lint"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
