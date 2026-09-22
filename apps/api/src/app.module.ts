@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { environmentSchema } from './config/environment.schema.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import type { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { PortfoliosModule } from './portfolios/portfolios.module.js';
 
 @Module({
     imports: [
@@ -41,6 +42,7 @@ import type { TypeOrmModuleOptions } from '@nestjs/typeorm';
             sortSchema: true,
         }),
         HealthModule,
+        PortfoliosModule
   ],
   controllers: [AppController],
   providers: [AppService],
