@@ -1,8 +1,11 @@
-import { HealthStatus } from "@/features/health/health-status";
-import { PortfolioList } from "@/features/portfolios/portfolio-list";
+import { PortfolioList } from "@/app/_components/portfolio-list"
+import { CreatePortfolioForm } from "@/app/_components/create-portfolio-form"
 
 export default function Home() {
     return (
-        <PortfolioList/ >
-  );
+        <main>
+            <PortfolioList />
+            {/*<CreatePortfolioForm />*/}
+        </main>
+    )
 }

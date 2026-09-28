@@ -17,4 +17,9 @@ export class PortfoliosService {
             }
         }) 
     }
+
+    create(name: string): Promise<Portfolio> {
+        const portfolio = this.portfolioRepository.create({ name })
+        return this.portfolioRepository.save(portfolio)
+    }
 }

@@ -19,5 +19,8 @@
   },
   "devDependencies": {
     "@types/bun": "latest"
+  },
+  "dependencies": {
+    "@gravity-ui/icons": "^2.22.0"
   }
 }

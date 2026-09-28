@@ -3,6 +3,8 @@
 import { useQuery } from "@apollo/client/react";
 import { PORTFOLIOS_QUERY } from "@/graphql/queries/portfolios";
 
+import { PortfolioCard } from "./portfolio-card";
+
 type PortfolioListItem = {
     id: string,
     name: string,
@@ -37,10 +39,13 @@ export function PortfolioList() {
     }
     
     return (
-        <ul>
-            {data.portfolios.map((portfolio) => (
-            <li key={portfolio.id}>{portfolio.name}</li>
-            ))}
-        </ul>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+	        {data.portfolios.map((portfolio) => (
+	            <PortfolioCard
+	                key={portfolio.id}
+	                name={portfolio.name}
+	            />
+	        ))}
+        </div>
     )
 }
