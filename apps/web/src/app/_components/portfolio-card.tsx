@@ -1,4 +1,4 @@
-import { Button, Card, Typography, Dropdown, DropdownPopover, DropdownItem, Label } from '@heroui/react';
+import { Button, Card, Typography, Dropdown, Label } from '@heroui/react';
 import { Ellipsis } from '@gravity-ui/icons'
 
 type PortfolioCardProps = {
@@ -9,22 +9,25 @@ export function PortfolioCard({ name }: PortfolioCardProps) {
     return (
         <Card>
             <Card.Header className='flex-row justify-between items-center'>
+                
                 <Card.Title className='text-xl font-semibold'>{name}</Card.Title>
+                
                 <Dropdown>
                     <Button isIconOnly variant='ghost' aria-label='Portfolio Options'>
-                        <Ellipsis className='outline-none'/>
+                        <Ellipsis />
                     </Button>
-                    <DropdownPopover>
+                    <Dropdown.Popover>
                         <Dropdown.Menu onAction={(key) => console.log(`Selected: ${key}`)}>
-                            <DropdownItem id="rename" textValue='Rename'>
+                            <Dropdown.Item id="rename" textValue='Rename'>
                                 <Label>Rename</Label>
-                            </DropdownItem>
-                            <DropdownItem id="delete" textValue='Delete' variant='danger'>
+                            </Dropdown.Item>
+                            <Dropdown.Item id="delete" textValue='Delete' variant='danger'>
                                 <Label>Delete</Label>
-                            </DropdownItem>
+                            </Dropdown.Item>
                         </Dropdown.Menu>
-                    </DropdownPopover>
+                    </Dropdown.Popover>
                 </Dropdown>
+                
             </Card.Header>
 
             <Card.Content>

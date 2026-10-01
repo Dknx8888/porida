@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useQuery } from "@apollo/client/react";
 import { PORTFOLIOS_QUERY } from "@/graphql/queries/portfolios";
