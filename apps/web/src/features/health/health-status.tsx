@@ -1,25 +1,32 @@
 "use client";
 
-import { useQuery } from "@apollo/client/react";
-import { HEALTH_QUERY } from "@/graphql/queries/health";
+import { api } from "@/lib/api/client";
+import { useQuery } from "@tanstack/react-query";
 
-type HealthQueryData = {
-  health: string;
-};
+async function getHealth() {
+    const result = await api.GET("/api/health");
+
+    if (!result.response.ok || !result.data) {
+        throw new Error("Cannot get health status.")
+    }
+    
+    return result.data;
+}
 
 export function HealthStatus() {
-  const { data, loading, error } = useQuery<HealthQueryData>(HEALTH_QUERY, {
-    ssr: false,
-  });
+    const { data, isPending, error } = useQuery({
+        queryKey: ['health'],
+        queryFn: getHealth,
+    })
+    
+    if (isPending) {
+        return <p>Checking API...</p>;
+    } 
 
-  if (loading) {
-    return <p>Checking API...</p>;
-  }
-
-  if (error) {
-    return <p>API connection failed: {error.message}</p>;
-  }
+    if (error) {
+      return <p>API connection failed: {error.message}</p>;
+    }
 
 // `data` state means the operation completed successfully    
-  return <p>API status: {data?.health ?? "unknown"}</p>;
+  return <p>API status: {data?.status ?? "unknown"}</p>;
 }

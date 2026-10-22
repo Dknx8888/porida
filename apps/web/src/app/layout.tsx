@@ -1,8 +1,9 @@
-import { ApolloProvider } from "@/providers/apollo-provider";
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/layout/app-shell";
+import { QueryProvider } from "@/providers/query-provider";
+
 
 const inter = Inter({
     variable: "--font-inter",
@@ -29,9 +30,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
           <body className="min-h-full flex flex-col">
-              <ApolloProvider>
-                  <AppShell>{children}</AppShell>
-              </ApolloProvider>
+                <QueryProvider>
+                    <AppShell>{children}</AppShell>
+                </QueryProvider>
           </body>
     </html>
   );

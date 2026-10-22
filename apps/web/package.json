@@ -6,18 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "generate:api": "openapi-typescript http://127.0.0.1:5100/openapi/v1.json -o src/lib/api/schema.d.ts"
   },
   "dependencies": {
-    "@apollo/client": "^4.3.1",
-    "@apollo/client-integration-nextjs": "^0.14.5",
     "@heroui/react": "3",
     "@heroui/styles": "3",
-    "graphql": "^17.0.2",
+    "@tanstack/react-query": "^5.104.1",
     "next": "16.3.5",
+    "openapi-fetch": "^0.17.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "rxjs": "^7.8.2"
+    "@gravity-ui/icons": "^2.22.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -26,6 +26,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
+    "openapi-typescript": "^7.13.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

@@ -1,5 +1,5 @@
-import { PortfolioList } from "@/app/_components/portfolio-list"
-import { CreatePortfolioForm } from "@/app/_components/create-portfolio-form"
+import { PortfolioList } from "@/features/portfolios/portfolio-list"
+import { CreatePortfolioForm } from "@/features/portfolios/create-portfolio-form"
 
 export default function Home() {
     return (

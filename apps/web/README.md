@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Porida web app
 
-## Getting Started
+Next.js/React frontend using HeroUI v3, Tailwind CSS v4, TanStack Query, and
+openapi-fetch. The active portfolio list reads from the ASP.NET Core REST API.
 
-First, run the development server:
+See [the project setup guide](../../SETUP.md) for the unified Ubuntu,
+Ultramarine, and Windows setup script, PostgreSQL, and API User Secrets.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Run from the repository root
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+~~~bash
+bun install --frozen-lockfile
+bun run dev:api
+~~~
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+In a separate terminal:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+~~~bash
+bun run dev:web
+~~~
 
-## Learn More
+Open the address printed by Next.js.
 
-To learn more about Next.js, take a look at the following resources:
+## API connection and generated types
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Copy .env.example to .env.local if needed. API_BASE_URL selects the backend
+used by the Next.js /api rewrite; its local default is http://127.0.0.1:5100.
+Restart the web server after changing it.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+With the .NET API running in Development, from the repository root:
 
-## Deploy on Vercel
+~~~bash
+bun run --cwd apps/web generate:api
+~~~
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This regenerates src/lib/api/schema.d.ts from the .NET OpenAPI contract.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Route composition lives in src/app. Portfolio code lives in
+src/features/portfolios, shared layout in src/components/layout, and the
+TanStack provider in src/providers. The create form is a saved draft; its
+submission flow is not connected yet.
+
+## Checks
+
+From the repository root:
+
+~~~bash
+bun run lint:web
+bun run build:web
+~~~
+
+Unused draft imports and mutation setup currently produce accepted lint
+warnings while feature development is paused.
