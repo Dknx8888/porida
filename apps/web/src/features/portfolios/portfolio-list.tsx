@@ -1,25 +1,10 @@
 "use client";
 
-import { api } from "@/lib/api/client";
-import { useQuery } from '@tanstack/react-query'
-
 import { PortfolioCard } from "./portfolio-card";
-
-async function getPortfolios() {
-    const result = await api.GET("/api/portfolios");
-
-    if (!result.response.ok || !result.data) {
-        throw new Error("Cannot get portfolios.")
-    }
-    
-    return result.data;
-}
+import { usePortfolios } from "./use-portfolios";
 
 export function PortfolioList() {
-    const { data, isPending, error } = useQuery({
-        queryKey: ['portfolios'],
-        queryFn: getPortfolios,
-    })
+    const { data, isPending, error } = usePortfolios()
 
     if (isPending) {
         return <p>Loading portfolios...</p>
@@ -30,7 +15,7 @@ export function PortfolioList() {
     }
 
     if (!data) {
-        return <p>Portfolio data is unavailable.</p>
+        return <p>Unable to fetch data. Please try again.</p>
     }
 
     if (data.length === 0) {

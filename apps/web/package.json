@@ -10,14 +10,15 @@
     "generate:api": "openapi-typescript http://127.0.0.1:5100/openapi/v1.json -o src/lib/api/schema.d.ts"
   },
   "dependencies": {
+    "@gravity-ui/icons": "^2.22.0",
     "@heroui/react": "3",
     "@heroui/styles": "3",
     "@tanstack/react-query": "^5.104.1",
     "next": "16.3.5",
+    "next-themes": "^0.4.6",
     "openapi-fetch": "^0.17.0",
     "react": "19.2.8",
-    "react-dom": "19.2.8",
-    "@gravity-ui/icons": "^2.22.0"
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

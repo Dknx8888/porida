@@ -1,24 +1,67 @@
 "use client";
 
 import { LayoutSideContentLeft, Bell, Gear, ArrowRightFromSquare } from '@gravity-ui/icons';
-import { Button, Dropdown, Avatar, Label, Typography } from '@heroui/react';
+import { Button, Dropdown, Avatar, Label, Typography, Switch } from '@heroui/react';
 import NextLink from 'next/link';
+import { useEffect, useState } from 'react';
 
 const placeholderAvatar = {
     src: '/images/shrek-realtoons.jpg',
     alt: 'Shrek Doe'
 }
 
-export function Header() {
+type HeaderProps = {
+    isSidebarExpanded: boolean,
+    onToggleSidebar: () => void,
+}
+
+function getGreeting(hour: number): string {
+    if (hour < 5) return "night";
+    if (hour < 12) return "morning";
+    if (hour < 19) return "afternoon";
+    if (hour < 22) return "evening";
+
+    return "night";
+}
+
+export function Header({ isSidebarExpanded, onToggleSidebar }: HeaderProps) {
+    
+    const [greeting, setGreeting] = useState("day");
+
+    // useEffect here to stop rerendering timer setup every normal rerender
+    useEffect(() => {
+        function updateGreeting() {
+            setGreeting(getGreeting(new Date().getHours()));
+        }
+
+        // Starts timer
+        const initialUpdate = window.setTimeout(updateGreeting, 0);
+        // Checks time every minute
+        const interval = window.setInterval(updateGreeting, 60_000);
+        // initialUpdate and interval are timer IDs returned from function calls
+        
+        return () => {
+            // If Header unmounts, this needs to be cleaned up else another interval caller runs. (kinda like freeing memory in C)
+            window.clearTimeout(initialUpdate);
+            window.clearInterval(interval);
+        };
+    }, [])
+    
     return (
         <header className="flex min-h-18 w-full shrink-0 items-center justify-between gap-4 px-4 py-3 sm:px-8">
             <div className="flex min-w-0 items-center gap-3">
-	            <Button isIconOnly variant='ghost' aria-label='Sidebar Toggle'>
-	                <LayoutSideContentLeft />
+                <Button
+                    isIconOnly variant='ghost'
+                    onClick={onToggleSidebar}
+                    aria-label={isSidebarExpanded ? "Collapse sidebar" : "Expand sidebar"}
+                    aria-expanded={isSidebarExpanded}
+                    aria-controls="app-sidebar"
+                >
+	                <LayoutSideContentLeft aria-hidden="true" />
                 </Button>
                 <NextLink href="/">
 	                <Typography weight='bold'>
-	                    Dashboard
+	                    Good {greeting}, name!
 	                </Typography>
                 </NextLink>
             </div>

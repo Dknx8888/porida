@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "@/components/layout/app-shell";
+import { ThemeProvider } from "@/providers/theme-provider";
 import { QueryProvider } from "@/providers/query-provider";
 
 
@@ -26,14 +27,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
         lang="en"
-        data-theme="light"
+        suppressHydrationWarning
         className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
     >
-          <body className="min-h-full flex flex-col">
-                <QueryProvider>
-                    <AppShell>{children}</AppShell>
-                </QueryProvider>
-          </body>
+            <body className="min-h-full flex flex-col">
+                <ThemeProvider>
+                    <QueryProvider>
+                        <AppShell>{children}</AppShell>
+                    </QueryProvider>
+                </ThemeProvider>
+            </body>
     </html>
   );
 }
