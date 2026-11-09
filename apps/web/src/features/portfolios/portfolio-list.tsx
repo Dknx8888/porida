@@ -1,7 +1,7 @@
 "use client";
 
 import { PortfolioCard } from "./portfolio-card";
-import { usePortfolios } from "./use-portfolios";
+import { usePortfolios } from "./api/portfolio-queries";
 
 export function PortfolioList() {
     const { data, isPending, error } = usePortfolios()
@@ -25,7 +25,8 @@ export function PortfolioList() {
     return (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 	        {data.map((portfolio) => (
-	            <PortfolioCard
+                <PortfolioCard
+                    id={portfolio.id}
 	                key={portfolio.id}
 	                name={portfolio.name}
 	            />

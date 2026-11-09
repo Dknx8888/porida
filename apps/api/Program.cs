@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Porida.Api.Features.Health;
 using Porida.Api.Features.Portfolios;
 using Microsoft.EntityFrameworkCore;
@@ -71,5 +72,27 @@ app.MapPost("/api/portfolios", async (
 app.MapGet("/api/health", () =>
     TypedResults.Ok(new HealthDto("ok")))
 .WithName("GetHealth");
+
+app.MapGet("/api/portfolios/{id:guid}", 
+        async Task<Results<Ok<PortfolioDto>, NotFound>> (
+            Guid id,
+            PoridaDbContext db,
+            CancellationToken cancellationToken) =>
+{
+    var selectedPortfolio = await db.Portfolios
+        .Where(p => p.Id == id)
+        .Select(p => new PortfolioDto(
+            p.Id,
+            p.Name,
+            p.CreatedAt,
+            p.UpdatedAt))
+        .SingleOrDefaultAsync(cancellationToken);
+    if (selectedPortfolio is null)
+    {
+        return TypedResults.NotFound();
+    }
+    return TypedResults.Ok(selectedPortfolio);
+})
+.WithName("GetPortfolio");
 
 app.Run();

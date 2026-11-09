@@ -1,27 +1,14 @@
 "use client";
 
-import { api } from "@/lib/api/client";
-import { useMutation } from "@tanstack/react-query";
+import { useCreatePortfolio } from "./api/portfolio-mutations";
 import { Button, Card, Form, Input, Label, TextField } from "@heroui/react";
 
-async function createPortfolio(newName: string) {
-    const result = await api.POST("/api/portfolios", {
-        body: {
-            name: newName
-        }
-    });
 
-    if (!result.response.ok || !result.data) {
-        throw new Error("Cannot create a portfolio.")
-    }
-    
-    return result.data;
-}
 
 export function CreatePortfolioForm() {
-    const createPortfolioMutation = useMutation({
-        mutationFn: createPortfolio
-    })
+    const createPortfolioMutation = useCreatePortfolio();
+
+    // createPortfolioMutation.mutate(name);
     
     return (
         <Card>

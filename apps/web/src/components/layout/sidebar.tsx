@@ -3,17 +3,12 @@ import {  Link, Switch } from "@heroui/react"
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { PortfolioSidebar } from "@/features/portfolios/portfolio-sidebar";
 
-type SidebarProps = {
-    isExpanded: boolean
-}
-
-export function Sidebar({ isExpanded }: SidebarProps) {
+export function Sidebar() {
 
     const { resolvedTheme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
-
+    
     // The browser schedules the mount to run once, after the current JS finishes
     useEffect(() => {
         const timer = window.setTimeout(() => {
@@ -26,8 +21,7 @@ export function Sidebar({ isExpanded }: SidebarProps) {
     
     return (
         <aside
-            className={`flex min-h-screen overflow-hidden shrink-0 bg-surface text-surface-foreground border-r border-separator
-                transition-[width] duration-200 ${isExpanded ? "w-80" : "w-18"}`}>
+            className={`flex overflow-hidden shrink-0 bg-surface text-surface-foreground border-r border-separator w-18`}>
                 
             <div className="w-18 shrink-0 flex flex-col bg-surface-secondary">
 
@@ -75,8 +69,6 @@ export function Sidebar({ isExpanded }: SidebarProps) {
                 </div>
 
             </div>
-            
-        <PortfolioSidebar />
         </aside>
     );
 }

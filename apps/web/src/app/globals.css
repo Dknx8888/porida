@@ -11,3 +11,10 @@ body {
     color: var(--foreground);
     font-family: var(--font-inter), sans-serif;
 }
+
+/* Add anim to expanded sidebar */
+@media (prefers-reduced-motion: no-preference) {
+    .sidebar-panels:not(:has(> [data-separator="active"])) > [data-panel] {
+        transition: flex-grow 200ms ease;
+    }
+}
