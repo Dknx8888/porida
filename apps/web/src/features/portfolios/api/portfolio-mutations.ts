@@ -1,5 +1,5 @@
 import { api } from "@/lib/api/client";
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 async function createPortfolio(newName: string) {
     const result = await api.POST("/api/portfolios", {
@@ -16,7 +16,17 @@ async function createPortfolio(newName: string) {
 }
 
 export function useCreatePortfolio() {
+    // This retrieves the existing cache used by the homepage and sidebar
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: createPortfolio,
+        // Invalidation marks that cached list as outdated and refetches it while it’s being displayed
+        // Both components then receive the updated list
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
+                queryKey: ["portfolios"],
+                exact: true
+            })
+        }
     });
 }
