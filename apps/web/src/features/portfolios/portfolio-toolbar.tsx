@@ -1,6 +1,12 @@
 import { ListBox, SearchField, Select } from "@heroui/react";
+import type { PortfolioSort } from "./portfolio-types";
 
-export function PortfolioToolbar() {
+type PortfolioToolbarProps = {
+    sortOrder: PortfolioSort;
+    onSortChange: (sortOrder: PortfolioSort) => void;
+};
+
+export function PortfolioToolbar({sortOrder, onSortChange} : PortfolioToolbarProps) {
     return (
         // sm applies to vw of 640px and above => flex-row applies to desktop, flex-col on mobile
         <div className="flex flex-col sm:flex-row sm:items-center gap-4">
@@ -14,7 +20,20 @@ export function PortfolioToolbar() {
             </SearchField>
 
             {/* stable width of w-64 and disables shrinking when on desktop */}
-            <Select className="w-full sm:w-64 sm:shrink-0">
+            <Select
+                className="w-full sm:w-64 sm:shrink-0"
+                value={sortOrder}
+                onChange={(value) => {
+                    if (
+                        value === "newest" ||
+                        value === "oldest" ||
+                        value === "a-z" ||
+                        value === "z-a"
+                    ) {
+                        onSortChange(value);
+                    }
+                }}
+            >
                 <Select.Trigger>
                     <Select.Value />
                     <Select.Indicator />
